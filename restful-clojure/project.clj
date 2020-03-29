@@ -24,7 +24,8 @@
   ; (I know... SO 2005).
   :plugins [[lein-ring "0.8.10"]
             [ragtime/ragtime.lein "0.3.6"]
-            [lein-environ "0.4.0"]]
+            [lein-environ "0.4.0"]
+            [org.clojure/core.unify "0.5.7"]]
 
   ; See https://github.com/weavejester/lein-ring#web-server-options for the
   ; various options available for the lein-ring plugin
