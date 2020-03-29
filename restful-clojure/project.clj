@@ -15,7 +15,8 @@
                  [environ "0.4.0"]
                  [buddy/buddy-hashers "0.4.0"]
                  [buddy/buddy-auth "0.4.0"]
-                 [crypto-random "1.2.0"]]
+                 [crypto-random "1.2.0"]
+                 [ring-mock "0.1.5"]]
 
   ; The lein-ring plugin allows us to easily start a development web server
   ; with "lein ring server". It also allows us to package up our application
@@ -26,7 +27,7 @@
             [lein-environ "0.4.0"]]
 
   ; See https://github.com/weavejester/lein-ring#web-server-options for the
-  ; various options available for the lein-ring plugin 
+  ; various options available for the lein-ring plugin
   :ring {:handler restful-clojure.handler/app
          :nrepl {:start? true
                  :port 9998}}
@@ -35,12 +36,10 @@
   ; variable so that we don't keep production credentials in our
   ; source code. Note that for our dev environment, we set this variable
   ; with Puppet (see default.pp).
-  :ragtime {:migrations ragtime.sql.files/migrations
-            :database ~(System/getenv "RESTFUL_DB_URL")}
+  :ragtime {:migrations ragtime.sql.files/migrations}
 
   :profiles
-  {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
-                        [ring-mock "0.1.5"]]
+  {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]]
          ; Since we are using environ, we can override these values with
          ; environment variables in production.
          :env {:restful-db "restful_dev"
