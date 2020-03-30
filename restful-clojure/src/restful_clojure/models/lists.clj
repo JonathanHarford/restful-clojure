@@ -1,25 +1,25 @@
 (ns restful-clojure.models.lists
-  (:use korma.core)
-  (:require [restful-clojure.entities :as e]
+  (:require [korma.core :as k]
+            [restful-clojure.entities :as e]
             [clojure.set :refer [difference]]))
 
 (declare add-product)
 
 (defn find-all []
-  (select e/lists
-    (with e/products)))
+  (k/select e/lists
+    (k/with e/products)))
 
 (defn find-by [field value]
   (first
-    (select e/lists
-      (with e/products)
-      (where {field value})
-      (limit 1))))
+    (k/select e/lists
+      (k/with e/products)
+      (k/where {field value})
+      (k/limit 1))))
 
 (defn find-all-by [field value]
-  (select e/lists
-    (with e/products)
-    (where {field value})))
+  (k/select e/lists
+    (k/with e/products)
+    (k/where {field value})))
 
 (defn find-by-id [id]
   (find-by :id id))
@@ -28,13 +28,13 @@
   (find-all-by :user_id (:id userdata)))
 
 (defn count-lists []
-  (let [agg (select e/lists
-              (aggregate (count :*) :cnt))]
+  (let [agg (k/select e/lists
+              (k/aggregate (count :*) :cnt))]
     (get-in agg [0 :cnt] 0)))
 
 (defn create [listdata]
-  (let [newlist (insert e/lists
-                  (values (dissoc listdata :products)))]
+  (let [newlist (k/insert e/lists
+                  (k/values (dissoc listdata :products)))]
     (doseq [product (:products listdata)]
       (add-product newlist (:id product) "incomplete"))
     (assoc newlist :products (into [] (:products listdata)))))
@@ -49,12 +49,12 @@
                    ") VALUES ("
                    "?, ?, ?::item_status"
                    ")")]
-      (exec-raw [sql [(:id listdata) product-id status] :results])
+      (k/exec-raw [sql [(:id listdata) product-id status] :results])
       (find-by-id (:id listdata)))))
 
 (defn remove-product [listdata product-id]
-  (delete "lists_products"
-    (where {:list_id (:id listdata)
+  (k/delete "lists_products"
+    (k/where {:list_id (:id listdata)
             :product_id product-id}))
    (update-in listdata [:products]
      (fn [products] (remove #(= (:id %) product-id) products))))
@@ -64,14 +64,14 @@
   [listdata]
   (into #{}
     (map :product_id
-      (select "lists_products"
-        (fields :product_id)
-        (where {:list_id (:id listdata)})))))
+      (k/select "lists_products"
+        (k/fields :product_id)
+        (k/where {:list_id (:id listdata)})))))
 
 (defn update-list [listdata]
-  (update e/lists
-    (set-fields (dissoc listdata :id :products))
-    (where {:id (:id listdata)}))
+  (k/update e/lists
+    (k/set-fields (dissoc listdata :id :products))
+    (k/where {:id (:id listdata)}))
   (let [existing-product-ids (get-product-ids-for listdata)
         updated-product-ids (->> (:products listdata)
                                  (map :id)
@@ -85,5 +85,5 @@
     (find-by-id (:id listdata))))
 
 (defn delete-list [listdata]
-  (delete e/lists
-    (where {:id (:id listdata)})))
+  (k/delete e/lists
+    (k/where {:id (:id listdata)})))

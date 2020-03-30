@@ -1,21 +1,20 @@
 (ns restful-clojure.users-test
-  (:use clojure.test
-        restful-clojure.test-core)
-  (:require [restful-clojure.models.users :as users]
+  (:require [clojure.test :refer [deftest is testing use-fixtures]]
+            [restful-clojure.models.users :as users]
             [restful-clojure.entities :as e]
-            [korma.core :as sql]
-            [environ.core :refer [env]]))
+            [restful-clojure.test-core :as test-core]
+            [korma.core :as k]))
 
 ; Run each test in an isolated db transaction and rollback
 ; afterwards
-(use-fixtures :each with-rollback)
+(use-fixtures :each test-core/with-rollback)
 
 (deftest create-read-users
   (testing "Create user"
     (let [count-orig (users/count-users)]
       (users/create {:name "Charlie" :email "charlie@example.com" :password "foo"})
       (is (= (inc count-orig) (users/count-users)))))
-  
+
   (testing "Retrieve user"
     (let [user (users/create {:name "Andrew" :email "me@mytest.com" :password "foo"})
           found-user (users/find-by-id (user :id))]
@@ -54,7 +53,7 @@
           user-count (users/count-users)]
       (users/delete-user user)
       (is (= (dec user-count) (users/count-users)))))
-  
+
   (testing "Deleted correct user"
     (let [user-keep (users/create {:name "Keep" :email "important@users.net" :password "foo"})
           user-del (users/create {:name "Delete" :email "irrelevant@users.net" :password "foo"})]
@@ -69,13 +68,13 @@
         user-id (:id user)]
     (testing "Accepts the correct password"
       (is (users/password-matches? user-id "s3cr3t")))
-    
+
     (testing "Rejects incorrect passwords"
       (is (not (users/password-matches? user-id "not_my_password"))))
-    
+
     (testing "Does not store the password in plain text"
-      (let [stored-pass (:password_digest (first (sql/select e/users
-                                                    (sql/where {:email "sly@falilystone.com"}))))]
+      (let [stored-pass (:password_digest (first (k/select e/users
+                                                    (k/where {:email "sly@falilystone.com"}))))]
         (is (not= stored-pass "s3cr3t"))))
 
     (testing "Does not include password or digest on user response"

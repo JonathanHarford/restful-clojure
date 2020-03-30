@@ -1,11 +1,11 @@
 (ns restful-clojure.auth
-  (:use korma.core)
   (:require [restful-clojure.entities :as e]
             [restful-clojure.models.users :as users]
             [buddy.auth.backends.token :refer [token-backend]]
             [buddy.auth.accessrules :refer [success error]]
             [buddy.auth :refer [authenticated?]]
-            [crypto.random :refer [base64]]))
+            [crypto.random :refer [base64]]
+            [korma.core :as k]))
 
 (defn gen-session-id [] (base64 32))
 
@@ -13,8 +13,8 @@
   "Creates an auth token in the database for the given user and puts it in the database"
   [user-id]
   (let [token (gen-session-id)]
-    (insert e/auth-tokens
-      (values {:id token
+    (k/insert e/auth-tokens
+      (k/values {:id token
                :user_id user-id}))
     token))
 
@@ -25,7 +25,7 @@
                  "FROM auth_tokens "
                  "WHERE id = ? "
                  "AND created_at > current_timestamp - interval '6 hours'")]
-    (some-> (exec-raw [sql [token]] :results)
+    (some-> (k/exec-raw [sql [token]] :results)
             first
             :user_id
             users/find-by-id)))

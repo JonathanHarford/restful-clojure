@@ -1,32 +1,31 @@
 (ns restful-clojure.entities
-  (:use korma.core
-        restful-clojure.db))
+  (:require [korma.core :as k]
+            [restful-clojure.db]))
 
 (declare users lists products)
 
-(defentity users
-  (pk :id)
-  (table :users)
-  (has-many lists)
-  (entity-fields :name :email))
+(k/defentity users
+  (k/pk :id)
+  (k/table :users)
+  (k/has-many lists)
+  (k/entity-fields :name :email))
 
-(defentity lists
-  (pk :id)
-  (table :lists)
-  (belongs-to users {:fk :user_id})
-  (many-to-many products :lists_products {:lfk :list_id
+(k/defentity lists
+  (k/pk :id)
+  (k/table :lists)
+  (k/belongs-to users {:fk :user_id})
+  (k/many-to-many products :lists_products {:lfk :list_id
                                           :rfk :product_id})
-  (entity-fields :title))
+  (k/entity-fields :title))
 
-(defentity products
-  (pk :id)
-  (table :products)
-  (many-to-many lists :lists_products {:lfk :product_id
+(k/defentity products
+  (k/pk :id)
+  (k/table :products)
+  (k/many-to-many lists :lists_products {:lfk :product_id
                                        :rfk :list_id})
-  (entity-fields :title :description))
+  (k/entity-fields :title :description))
 
-(defentity auth-tokens
-  (pk :id)
-  (table :auth_tokens)
-  (belongs-to users {:fk :user_id}))
-
+(k/defentity auth-tokens
+  (k/pk :id)
+  (k/table :auth_tokens)
+  (k/belongs-to users {:fk :user_id}))

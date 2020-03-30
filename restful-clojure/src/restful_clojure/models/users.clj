@@ -1,8 +1,7 @@
 (ns restful-clojure.models.users
-  (:use korma.core)
   (:require [restful-clojure.entities :as e]
             [buddy.hashers :as hashers]
-            [clojure.set :refer [map-invert]]))
+            [korma.core :as k]))
 
 (def user-levels
   {"user" ::user
@@ -19,13 +18,13 @@
                        "user")))
 
 (defn find-all []
-  (select e/users))
+  (k/select e/users))
 
 (defn find-by [field value]
-  (some-> (select* e/users)
-          (where {field value})
-          (limit 1)
-          select
+  (some-> (k/select* e/users)
+          (k/where {field value})
+          (k/limit 1)
+          k/select
           first
           (dissoc :password_digest)
           with-kw-level))
@@ -40,38 +39,38 @@
   (find-by :email email))
 
 (defn create [user]
-  (-> (insert* e/users)
-      (values (-> user
+  (-> (k/insert* e/users)
+      (k/values (-> user
                   (assoc :password_digest (hashers/encrypt (:password user)))
                   with-str-level
                   (dissoc :password)))
-      insert
+      k/insert
       (dissoc :password_digest)
       with-kw-level))
 
 (defn update-user [user]
-  (update e/users
-    (set-fields (-> user
+  (k/update e/users
+    (k/set-fields (-> user
                     (dissoc :id :password)
                     with-str-level))
-    (where {:id (user :id)})))
+    (k/where {:id (user :id)})))
 
 (defn count-users []
-  (let [agg (select e/users
-              (aggregate (count :*) :cnt))]
+  (let [agg (k/select e/users
+              (k/aggregate (count :*) :cnt))]
     (get-in agg [0 :cnt] 0)))
 
 (defn delete-user [user]
-  (delete e/users
-    (where {:id (user :id)})))
+  (k/delete e/users
+    (k/where {:id (user :id)})))
 
 (defn password-matches?
   "Check to see if the password given matches the digest of the user's saved password"
   [id password]
-  (some-> (select* e/users)
-            (fields :password_digest)
-            (where {:id id})
-            select
+  (some-> (k/select* e/users)
+            (k/fields :password_digest)
+            (k/where {:id id})
+            k/select
             first
             :password_digest
             (->> (hashers/check password))))

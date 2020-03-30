@@ -1,11 +1,11 @@
 (ns restful-clojure.auth-test
-  (:use clojure.test
-        restful-clojure.test-core)
-  (:require [restful-clojure.auth :as auth]
+  (:require [clojure.test :refer [deftest is testing use-fixtures]]
+            [restful-clojure.auth :as auth]
             [restful-clojure.models.users :as u]
-            [korma.core :as sql]))
+            [restful-clojure.test-core :as test-core]
+            [korma.core :as k]))
 
-(use-fixtures :each with-rollback)
+(use-fixtures :each test-core/with-rollback)
 
 (deftest authenticating-users
   (let [user (u/create {:name "Test" :email "user@example.com" :password "s3cr3t"})]
@@ -22,7 +22,7 @@
             sql (str "UPDATE auth_tokens "
                      "SET created_at = NOW() - interval '7 hours' "
                      "WHERE id = ?")]
-        (sql/exec-raw [sql [token]])
+        (k/exec-raw [sql [token]])
         (is (nil? (auth/authenticate-token {} token)))))))
 
 ; (detest authorizing-users
