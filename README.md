@@ -2,7 +2,6 @@ restful-clojure
 ===============
 
 TODO:
-* Upgrade clojure to 1.10 (why can't we upgrade past 1.8?)
 * Update ragtime
 * Use hugsql instead of korma
 * Front-end (Re-frame? Posh?)

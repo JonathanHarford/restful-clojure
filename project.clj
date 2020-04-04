@@ -4,7 +4,7 @@
   :license {:name "MIT"
             :url "http://opensource.org/licenses/MIT"}
 
-  :dependencies [[org.clojure/clojure "1.8.0"] ; Breaks at 1.9; why?
+  :dependencies [[org.clojure/clojure "1.10.0"]
                  [ring/ring-core "1.8.0"]
                  [ring/ring-jetty-adapter "1.8.0"]
                  [compojure "1.6.1"]
