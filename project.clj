@@ -12,7 +12,7 @@
                  [ring/ring-json "0.2.0"]
                  [korma "0.3.0-RC5"] ; Breaks at 0.3.0 proper
                  [postgresql "9.3-1102.jdbc41"]
-                 [ragtime "0.3.4"]
+                 [ragtime "0.3.9"] ; API changes
                  [environ "1.1.0"]
                  [buddy/buddy-hashers "1.4.0"]
                  [buddy/buddy-auth "2.2.0"]
@@ -27,6 +27,7 @@
   :plugins [[lein-cljfmt "0.6.7"]
             [lein-environ "1.1.0"]
             [lein-ring "0.12.5"]
+            [ragtime/ragtime.lein "0.3.9"]
             [org.clojure/core.unify "0.5.7"]]
 
   ; See https://github.com/weavejester/lein-ring#web-server-options for the
