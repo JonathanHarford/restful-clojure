@@ -1,7 +1,6 @@
 ;; Common utilities to use across tests
 (ns restful-clojure.test-core
-  (:use clojure.test)
-  (:require [korma.db :as db]))
+  (:require [korma.db :as k]))
 
 (defn substring? [sub st]
   (if (nil? st)
@@ -12,6 +11,6 @@
   "Test fixture for executing a test inside a database transaction
   that rolls back at the end so that database tests can remain isolated"
   [test-fn]
-  (db/transaction
+  (k/transaction
     (test-fn)
-    (db/rollback)))
+    (k/rollback)))

@@ -1,13 +1,12 @@
 (ns restful-clojure.users+lists-test
-  (:use clojure.test
-        restful-clojure.test-core)
-  (:require [restful-clojure.models.users :as users]
-            [restful-clojure.models.lists :as lists]
-            [environ.core :refer [env]]))
+  (:require [clojure.test :refer [use-fixtures deftest is testing]]
+            [restful-clojure.test-core :as test-core]
+            [restful-clojure.models.users :as users]
+            [restful-clojure.models.lists :as lists]))
 
 ; Run each test in an isolated db transaction and rollback
 ; afterwards
-(use-fixtures :each with-rollback)
+(use-fixtures :each test-core/with-rollback)
 
 (deftest user-list-interactions
   (let [user (users/create {:name "Jed" :email "jed@i.com" :password "s3cr3t"})

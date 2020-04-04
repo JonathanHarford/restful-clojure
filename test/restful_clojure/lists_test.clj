@@ -1,7 +1,7 @@
 (ns restful-clojure.lists-test
-  (:use clojure.test
-        restful-clojure.test-core)
-  (:require [restful-clojure.models.lists :as lists]
+  (:require [clojure.test :refer [use-fixtures deftest is testing]]
+            [restful-clojure.test-core :refer [with-rollback]]
+            [restful-clojure.models.lists :as lists]
             [restful-clojure.models.products :as products]
             [restful-clojure.models.users :as users]))
 

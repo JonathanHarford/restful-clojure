@@ -1,8 +1,7 @@
 (ns restful-clojure.handler
-  (:use compojure.core
-        ring.middleware.json)
   (:import (com.fasterxml.jackson.core JsonGenerator))
-  (:require [compojure.handler :as handler]
+  (:require [compojure.core :refer [defroutes context routes GET POST PUT DELETE]]
+            [ring.middleware.json :as json]
             [compojure.route :as route]
             [ring.util.response :refer [response]]
             [cheshire.generate :refer [add-encoder]]
@@ -32,7 +31,7 @@
   (response (users/find-by-id (read-string id))))
 
 (defn lists-for-user [{{:keys [id]} :params}]
-  (response 
+  (response
     (map #(dissoc % :user_id) (lists/find-all-by :user_id (read-string id)))))
 
 (defn delete-user [{{:keys [id]} :params}]
@@ -147,5 +146,5 @@
   (-> app-routes
       (wrap-authentication auth-backend)
       (wrap-authorization auth-backend)
-      wrap-json-response
-      (wrap-json-body {:keywords? true})))
+      json/wrap-json-response
+      (json/wrap-json-body {:keywords? true})))
