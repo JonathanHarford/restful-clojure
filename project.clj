@@ -44,8 +44,9 @@
   ;;           [lein-environ "1.1.0"]
   ;; ]
 
-  :plugins [[lein-ring "0.8.10"]
+  :plugins [[lein-cljfmt "0.6.7"]
             [lein-environ "0.4.0"]
+            [lein-ring "0.8.10"]
             [org.clojure/core.unify "0.5.7"]]
 
   ; See https://github.com/weavejester/lein-ring#web-server-options for the

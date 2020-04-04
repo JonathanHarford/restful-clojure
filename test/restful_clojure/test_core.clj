@@ -12,5 +12,5 @@
   that rolls back at the end so that database tests can remain isolated"
   [test-fn]
   (k/transaction
-    (test-fn)
-    (k/rollback)))
+   (test-fn)
+   (k/rollback)))

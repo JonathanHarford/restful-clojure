@@ -48,9 +48,9 @@
             list-del (lists/create {:user_id user-id :title "Stuff to delete"})]
         (lists/delete-list list-del)
         (is (seq
-               (lists/find-by-id (:id list-keep))))
+             (lists/find-by-id (:id list-keep))))
         (is (nil?
-               (lists/find-by-id (:id list-del))))))))
+             (lists/find-by-id (:id list-del))))))))
 
 (deftest add-products
   (let [user (users/create {:name "Test user" :email "me@mytest.com" :password "s3cr3t"})

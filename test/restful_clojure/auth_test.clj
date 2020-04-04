@@ -12,10 +12,12 @@
 
     (testing "Authenticates with valid token"
       (let [token (auth/make-token! (:id user))]
-        (is (= user (auth/authenticate-token {} token)))))
+        (is (= user
+               (auth/authenticate-token {} token)))))
 
     (testing "Does not authenticate with nonexistent token"
-      (is (nil? (auth/authenticate-token {} "youhavetobekiddingme"))))
+      (is (nil?
+           (auth/authenticate-token {} "youhavetobekiddingme"))))
 
     (testing "Does not authenticate with expired token"
       (let [token (auth/make-token! (:id user))

@@ -19,7 +19,7 @@
     (let [user (users/create {:name "Andrew" :email "me@mytest.com" :password "foo"})
           found-user (users/find-by-id (user :id))]
       (is (= "Andrew" (found-user :name))
-      (is (= "me@mytest.com" (found-user :email))))))
+          (is (= "me@mytest.com" (found-user :email))))))
 
   (testing "Find by email"
     (users/create {:name "John Doe" :email "j.doe@ihearttractors.com" :password "foo"})
@@ -61,7 +61,7 @@
       (is (= (dissoc user-keep :password)
              (users/find-by-id (user-keep :id))))
       (is (nil?
-             (users/find-by-id (user-del :id)))))))
+           (users/find-by-id (user-del :id)))))))
 
 (deftest authenticate-users
   (let [user (users/create {:name "Sly" :email "sly@falilystone.com" :password "s3cr3t"})
@@ -74,7 +74,7 @@
 
     (testing "Does not store the password in plain text"
       (let [stored-pass (:password_digest (first (k/select e/users
-                                                    (k/where {:email "sly@falilystone.com"}))))]
+                                                           (k/where {:email "sly@falilystone.com"}))))]
         (is (not= stored-pass "s3cr3t"))))
 
     (testing "Does not include password or digest on user response"

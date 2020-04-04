@@ -52,12 +52,12 @@
   (testing "POST /users"
     (let [user-count (u/count-users)
           response (handler/app (-> (req/request :post "/users")
-                            with-auth-header
-                            (req/body (json/generate-string {:name "Joe Test"
-                                                         :email "joe@example.com"
-                                                         :password "s3cret"}))
-                            (req/content-type "application/json")
-                            (req/header "Accept" "application/json")))]
+                                    with-auth-header
+                                    (req/body (json/generate-string {:name "Joe Test"
+                                                                     :email "joe@example.com"
+                                                                     :password "s3cret"}))
+                                    (req/content-type "application/json")
+                                    (req/header "Accept" "application/json")))]
       (is (= (:status response) 201))
       (is (test-core/substring? "/users/" (get-in response [:headers "Location"])))
       (is (= (inc user-count) (u/count-users))))))
@@ -105,10 +105,10 @@
     (let [list-count (l/count-lists)
           user (u/create {:name "John Doe" :email "j.doe@mytest.com" :password "s3cr3t"})
           response (handler/app (-> (req/request :post "/lists")
-                            with-auth-header
-                            (req/body (str "{\"user_id\":" (:id user) ",\"title\":\"Amazing Accoutrements\"}"))
-                            (req/content-type "application/json")
-                            (req/header "Accept" "application/json")))]
+                                    with-auth-header
+                                    (req/body (str "{\"user_id\":" (:id user) ",\"title\":\"Amazing Accoutrements\"}"))
+                                    (req/content-type "application/json")
+                                    (req/header "Accept" "application/json")))]
       (is (= (:status response) 201))
       (is (test-core/substring? "/users/" (get-in response [:headers "Location"])))
       (is (= (inc list-count) (l/count-lists))))))
@@ -151,10 +151,10 @@
   (testing "POST /products"
     (let [prod-count (p/count-products)
           response (handler/app (-> (req/request :post "/products")
-                            with-auth-header
-                            (req/body (str "{\"title\":\"Granny Smith\",\"description\":\"Howdya like them apples?\"}"))
-                            (req/content-type "application/json")
-                            (req/header "Accept" "application/json")))]
+                                    with-auth-header
+                                    (req/body (str "{\"title\":\"Granny Smith\",\"description\":\"Howdya like them apples?\"}"))
+                                    (req/content-type "application/json")
+                                    (req/header "Accept" "application/json")))]
       (is (= (:status response) 201))
       (is (test-core/substring? "/products/" (get-in response [:headers "Location"])))
       (is (= (inc prod-count) (p/count-products))))))

@@ -14,8 +14,8 @@
   [user-id]
   (let [token (gen-session-id)]
     (k/insert e/auth-tokens
-      (k/values {:id token
-               :user_id user-id}))
+              (k/values {:id token
+                         :user_id user-id}))
     token))
 
 (defn authenticate-token

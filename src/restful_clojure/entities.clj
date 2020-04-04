@@ -15,14 +15,14 @@
   (k/table :lists)
   (k/belongs-to users {:fk :user_id})
   (k/many-to-many products :lists_products {:lfk :list_id
-                                          :rfk :product_id})
+                                            :rfk :product_id})
   (k/entity-fields :title))
 
 (k/defentity products
   (k/pk :id)
   (k/table :products)
   (k/many-to-many lists :lists_products {:lfk :product_id
-                                       :rfk :list_id})
+                                         :rfk :list_id})
   (k/entity-fields :title :description))
 
 (k/defentity auth-tokens
