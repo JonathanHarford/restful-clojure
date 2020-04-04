@@ -1,6 +1,6 @@
 (defproject restful-clojure "0.1.0-SNAPSHOT"
   :description "An example RESTful shopping list application back-end written in Clojure to accompany a tutorial series on kendru.github.io"
-  :url "https://github.com/kendru/restful-clojure"
+  :url "https://github.com/JonathanHarford/restful-clojure"
   :license {:name "MIT"
             :url "http://opensource.org/licenses/MIT"}
 
@@ -12,7 +12,7 @@
                  [ring/ring-json "0.2.0"]
                  [korma "0.3.0-RC5"] ; Breaks at 0.3.0 proper
                  [postgresql "9.3-1102.jdbc41"]
-                 [ragtime "0.3.9"] ; API changes
+                 [ragtime "0.3.9"] ; API changes after 0.3
                  [environ "1.1.0"]
                  [buddy/buddy-hashers "1.4.0"]
                  [buddy/buddy-auth "2.2.0"]
@@ -36,10 +36,6 @@
          :nrepl {:start? true
                  :port 9998}}
 
-  ; Have ragtime default to loading the database URL from an environment
-  ; variable so that we don't keep production credentials in our
-  ; source code. Note that for our dev environment, we set this variable
-  ; with Puppet (see default.pp).
   :ragtime {:migrations ragtime.sql.files/migrations}
 
   :profiles
