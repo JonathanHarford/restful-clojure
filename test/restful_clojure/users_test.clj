@@ -1,6 +1,6 @@
 (ns restful-clojure.users-test
   (:require [clojure.test :refer [deftest is testing use-fixtures]]
-            [restful-clojure.models.users :as users]
+            [restful-clojure.db.users :as users]
             [restful-clojure.entities :as e]
             [restful-clojure.test-core :as test-core]
             [korma.core :as k]))
@@ -28,7 +28,7 @@
 
   (testing "Create with user level"
     (let [admin (users/create {:name "Jane Doe" :email "jane@ihearttractors.com" :password "foo" :level "admin"})
-          expected-level :restful-clojure.models.users/admin]
+          expected-level :restful-clojure.db.users/admin]
       (is (= expected-level (:level admin)))
       (is (= expected-level (:level (users/find-by-id (:id admin))))))))
 

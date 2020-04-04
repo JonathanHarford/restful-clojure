@@ -1,6 +1,6 @@
 (ns restful-clojure.auth
   (:require [restful-clojure.entities :as e]
-            [restful-clojure.models.users :as users]
+            [restful-clojure.db.users :as users]
             [buddy.auth.backends.token :refer [token-backend]]
             [buddy.auth.accessrules :refer [success error]]
             [buddy.auth :refer [authenticated?]]
@@ -42,9 +42,9 @@
 
 ;; Map of actions to the set of user types authorized to perform that action
 (def permissions
-  {"manage-lists"    #{:restful-clojure.models.users/user}
-   "manage-products" #{:restful-clojure.models.users/admin}
-   "manage-users"    #{:restful-clojure.models.users/admin}})
+  {"manage-lists"    #{:restful-clojure.db.users/user}
+   "manage-products" #{:restful-clojure.db.users/admin}
+   "manage-users"    #{:restful-clojure.db.users/admin}})
 
 ;;; Below are the handlers that Buddy will use for various authorization
 ;;; requirements the authenticated-user function determines whether a session

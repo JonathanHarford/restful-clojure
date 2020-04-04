@@ -1,4 +1,4 @@
-(ns restful-clojure.models.users
+(ns restful-clojure.db.users
   (:require [restful-clojure.entities :as e]
             [buddy.hashers :as hashers]
             [korma.core :as k]))

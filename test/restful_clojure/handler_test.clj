@@ -3,10 +3,10 @@
             [cheshire.core :as json]
             [restful-clojure.handler :as handler]
             [restful-clojure.test-core :as test-core]
-            [restful-clojure.models.users :as u]
-            [restful-clojure.models.lists :as l]
+            [restful-clojure.db.users :as u]
+            [restful-clojure.db.lists :as l]
             [restful-clojure.auth :as auth]
-            [restful-clojure.models.products :as p]
+            [restful-clojure.db.products :as p]
             [ring.mock.request :as req]))
 
 ; WIll be rebound in test

@@ -1,4 +1,4 @@
-(ns restful-clojure.models.products
+(ns restful-clojure.db.products
   (:require [restful-clojure.entities :as e]
             [korma.core :as k]))
 

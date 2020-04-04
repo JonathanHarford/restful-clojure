@@ -1,7 +1,7 @@
 (ns restful-clojure.auth-test
   (:require [clojure.test :refer [deftest is testing use-fixtures]]
             [restful-clojure.auth :as auth]
-            [restful-clojure.models.users :as u]
+            [restful-clojure.db.users :as u]
             [restful-clojure.test-core :as test-core]
             [korma.core :as k]))
 
@@ -29,4 +29,4 @@
 
 ; (detest authorizing-users
 ;   (let [user (u/create {:name "User" :email "user@example.com" :password "s3cr3t"})
-;         admin (u/create {:name "Admin" :email "admin@example.com" :password "sup3rs3cr3t" :restful-clojure.models.users/admin})]))
+;         admin (u/create {:name "Admin" :email "admin@example.com" :password "sup3rs3cr3t" :restful-clojure.db.users/admin})]))

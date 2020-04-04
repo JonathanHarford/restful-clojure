@@ -1,8 +1,8 @@
 (ns restful-clojure.users+lists-test
   (:require [clojure.test :refer [use-fixtures deftest is testing]]
             [restful-clojure.test-core :as test-core]
-            [restful-clojure.models.users :as users]
-            [restful-clojure.models.lists :as lists]))
+            [restful-clojure.db.users :as users]
+            [restful-clojure.db.lists :as lists]))
 
 ; Run each test in an isolated db transaction and rollback
 ; afterwards

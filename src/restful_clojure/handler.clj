@@ -5,9 +5,9 @@
             [compojure.route :as route]
             [ring.util.response :refer [response]]
             [cheshire.generate :refer [add-encoder]]
-            [restful-clojure.models.users :as users]
-            [restful-clojure.models.lists :as lists]
-            [restful-clojure.models.products :as products]
+            [restful-clojure.db.users :as users]
+            [restful-clojure.db.lists :as lists]
+            [restful-clojure.db.products :as products]
             [restful-clojure.auth :refer [auth-backend user-can user-isa user-has-id authenticated-user unauthorized-handler make-token!]]
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
             [buddy.auth.accessrules :refer [restrict]]))
@@ -108,7 +108,7 @@
   ;; LISTS
   (context "/lists" []
     (GET "/" [] (-> get-lists
-                    (restrict {:handler {:and [authenticated-user (user-isa :restful-clojure.models.users/admin)]}
+                    (restrict {:handler {:and [authenticated-user (user-isa :restful-clojure.db.users/admin)]}
                                :on-error unauthorized-handler})))
     (POST "/" [] (-> create-list
                      (restrict {:handler {:and [authenticated-user (user-can "manage-lists")]}

@@ -1,6 +1,6 @@
 (ns restful-clojure.products-test
   (:require [clojure.test :refer [deftest is testing use-fixtures]]
-            [restful-clojure.models.products :as products]
+            [restful-clojure.db.products :as products]
             [restful-clojure.test-core :refer [with-rollback]]))
 
 (use-fixtures :each with-rollback)

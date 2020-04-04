@@ -1,4 +1,4 @@
-(ns restful-clojure.models.lists
+(ns restful-clojure.db.lists
   (:require [korma.core :as k]
             [restful-clojure.entities :as e]
             [clojure.set :refer [difference]]))
